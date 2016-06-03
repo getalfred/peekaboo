@@ -51,8 +51,8 @@ if (system.args.length < 3 || system.args.length > 4) {
                     }
                 }
             }
+
             var result = page.evaluate(getElementInfo , targetSelector);
-            console.log(result);
             if (result.rect !== null) {
                 page.clipRect=result.rect;
             }
