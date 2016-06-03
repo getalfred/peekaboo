@@ -48,6 +48,7 @@ if (system.args.length < 3 || system.args.length > 4) {
 
             // Set a timeout to give the page a chance to render
             setTimeout(function () {
+                console.log("write: "+output)
                 page.render(output);
                 phantom.exit(1);
             }, 250);
