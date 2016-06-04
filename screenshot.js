@@ -42,7 +42,7 @@ if (system.args.length < 3 || system.args.length > 4) {
                 var elem
                 if(selector.indexOf("xpath:") == 0){
                     elem = document.evaluate(selector.substr(6), document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                } else if( selector !== undefined) {
+                } else if( selector !== undefined && selector !== '' ) {
                     elem = document.querySelector(selector);
                 }
 

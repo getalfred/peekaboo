@@ -25,6 +25,7 @@ def screenshot(url, selector)
   image_path     = (foldr + image_filename).expand_path
 
   cmd = Shellwords.join(['phantomjs', SCREENSHOTJS_PATH, url, image_path, selector])
+  puts cmd
   puts %x{#{cmd}}
 
   # update git repo & push to remote repo
