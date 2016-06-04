@@ -1,0 +1,19 @@
+git_repo_path: "/home/peekaboo/data"
+pages:
+  - title: "google"
+    url: "https://google.com"
+    selector: "#body"
+  - title: "BBC"
+    url: "https://www.bbc.com"
+    selector: 'xpath://*[@id="page"]/section[3]/div/div/section[1]'
+import_csv_urls:
+  - "https://docs.google.com/spreadsheets/d/1h7TEsN7-G0i9LTXaZjNfZzaQYjwfcsBvIag-Df_zz-U/pub?gid=0&single=true&output=csv"
+slack:
+  incoming_webhooks: "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+  channel: '#general'
+  username: "peekaboo bot"
+  icon: ":ghost:"
+
+github_repo: "getalfred/peekaboo-data"
+
+

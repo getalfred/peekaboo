@@ -23,7 +23,7 @@ if (system.args.length < 3 || system.args.length > 4) {
     console.log('open: ' + address);
     console.log('selector: ' + targetSelector);
 
-    page.settings.resourceTimeout = 5000; // 5 seconds
+    page.settings.resourceTimeout = 10000; // 10 seconds
     page.onResourceTimeout = function(e) {
         console.log("resourceTimeout: ")
         console.log(e.errorCode);   // it'll probably be 408
