@@ -35,14 +35,14 @@ end
 
 # get all pages
 def pages
-  pages = CONFIG["pages"].dup
+  pages = CONFIG["pages"] ? CONFIG["pages"].dup : []
   CONFIG["import_csv_urls"].each do |csv_url|
     csv_data = open(csv_url,'r').read.force_encoding('utf-8')
     CSV.parse(csv_data) do |row|
       pages << {
         "title"    =>  row[0],
         "url"      =>  row[1],
-        "selector" =>  row[2]
+        "selector" =>  row[2].to_s
       }
     end
   end
