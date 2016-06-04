@@ -22,6 +22,16 @@ if (system.args.length < 3 || system.args.length > 4) {
 
     console.log('open: ' + address);
     console.log('selector: ' + targetSelector);
+
+    page.settings.resourceTimeout = 5000; // 5 seconds
+    page.onResourceTimeout = function(e) {
+        console.log("resourceTimeout: ")
+        console.log(e.errorCode);   // it'll probably be 408
+        console.log(e.errorString); // it'll probably be 'Network timeout on resource'
+        console.log(e.url);         // the url whose request timed out
+        phantom.exit(1);
+    };
+
     page.open(address, function (status) {
         if (status !== 'success') {
             console.log('Unable to load the address!');

@@ -30,7 +30,8 @@ end
   file_path = foldr + (Digest::MD5.hexdigest(selector)+".png")
   get_screenshot(url, file_path.expand_path, selector)
   Dir.chdir(base_foldr)
-  %x{git add . && git commit -a -m '#{host} - #{Time.now.to_s}' && git push}
+  commit_message = "#{url} - #{Time.now.to_s}"
+  %x{git add . && git commit -a -m #{Shellwords.escape(commit_message)} && git push}
 end
 
 
