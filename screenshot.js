@@ -34,6 +34,22 @@ if (system.args.length < 3 || system.args.length > 4) {
         phantom.exit(1);
     };
 
+    page.onError = function(msg, trace) {
+        var msgStack = ['ERROR: ' + msg];
+        if (trace && trace.length) {
+            msgStack.push('TRACE:');
+            trace.forEach(function(t) {
+                msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function +'")' : ''));
+            });
+        }
+        console.error(msgStack.join('\n'));
+    };
+
+    page.onResourceError = function(resourceError) {
+        console.log('Unable to load resource (#' + resourceError.id + 'URL:' + resourceError.url + ')');
+        console.log('Error code: ' + resourceError.errorCode + '. Description: ' + resourceError.errorString);
+    };
+
     page.open(address, function (status) {
         if (status !== 'success') {
             console.log('Unable to load the address!');
@@ -51,15 +67,13 @@ if (system.args.length < 3 || system.args.length > 4) {
                 if(elem != null){
                     return {
                         "rect": elem.getBoundingClientRect(),
-                        "text": elem.innerText,
-                        "html": elem.innerHTML
+                        "text": elem.innerText
                     }
 
                 } else {
                     return {
                         "rect": null,
-                        "text": document.body.innerText,
-                        "html": document.body.innerHTML
+                        "text": document.body.innerText
                     }
                 }
             }
