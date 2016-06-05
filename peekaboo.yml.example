@@ -9,7 +9,7 @@ pages:
 import_csv_urls:
   - "https://docs.google.com/spreadsheets/d/1h7TEsN7-G0i9LTXaZjNfZzaQYjwfcsBvIag-Df_zz-U/pub?gid=0&single=true&output=csv"
 slack:
-  incoming_webhooks: "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+  incoming_webhook_url: ""
   channel: '#general'
   username: "peekaboo bot"
   icon: ":ghost:"

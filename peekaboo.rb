@@ -17,21 +17,21 @@ SCREENSHOTJS_PATH = Pathname.new('./screenshot.js').realpath
 GIT_REPO_PATH     = Pathname.new( CONFIG['git_repo_path'])
 
 # use phantomjs get screen & push to github
-def screenshot(url, selector)
-  host  =  Addressable::URI.parse(url).host
+def screenshot(page)
+  host  =  Addressable::URI.parse(page["url"]).host
   foldr = GIT_REPO_PATH + host
 
   foldr.mkpath if !File.exists?( foldr )
-  image_filename = Digest::MD5.hexdigest( url + selector )+".png"
+  image_filename = Digest::MD5.hexdigest( page["url"] + page["selector"] )+".png"
   image_path     = (foldr + image_filename).expand_path
 
-  cmd = Shellwords.join(['phantomjs', SCREENSHOTJS_PATH, url, image_path, selector])
-  puts cmd
+  cmd = Shellwords.join(['phantomjs', SCREENSHOTJS_PATH, page["url"], image_path, page["selector"]])
+  puts "screenshot cmd: #{cmd}"
   puts %x{#{cmd}}
 
   # update git repo & push to remote repo
   Dir.chdir(GIT_REPO_PATH)
-  commit_message = "#{url} - #{Time.now.to_s}"
+  commit_message = "#{page["title"]} - #{page["url"]} \n #{Time.now.to_s}"
   %x{git add . && git commit -a -m #{Shellwords.escape(commit_message)} && git push 2>&1}
 end
 
@@ -52,6 +52,9 @@ def pages
 end
 
 def send_slack_message(message)
+  incoming_webhook_url = CONFIG["slack"]["incoming_webhook_url"]
+  return if !incoming_webhook_url || incoming_webhook_url.empty?
+
   data = {
     "username":   CONFIG["slack"]["username"],
     "icon_emoji": CONFIG["slack"]["icon_emoji"],
@@ -66,7 +69,7 @@ end
 
 pages.each do |page|
   puts "===== #{page["url"]} ===== "
-  result = screenshot(page["url"], page["selector"])
+  result = screenshot(page)
   puts result
   matches = result.match(/[a-z0-9]{7}\.\.(?<commit_hash>[a-z0-9]{7})/)
 
