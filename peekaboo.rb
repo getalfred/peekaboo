@@ -25,7 +25,11 @@ def screenshot(page)
   image_filename = Digest::MD5.hexdigest( page["url"] + page["selector"] )+".png"
   image_path     = (foldr + image_filename).expand_path
 
-  cmd = Shellwords.join(['phantomjs', SCREENSHOTJS_PATH, page["url"], image_path, page["selector"]])
+  cmd = Shellwords.join(['phantomjs',
+                         '--ssl-ciphers=ALL',
+                         '--ignore-ssl-errors=true',
+                         '--ssl-protocol=ANY',
+                         SCREENSHOTJS_PATH, page["url"], image_path, page["selector"]])
   puts "screenshot cmd: #{cmd}"
   puts %x{#{cmd}}
 
@@ -68,7 +72,7 @@ def send_slack_message(message)
 end
 
 pages.each do |page|
-  puts "===== #{page["url"]} ===== "
+  puts "\n===== #{page["title"]} #{page["url"]} ===== "
   result = screenshot(page)
   puts result
   matches = result.match(/[a-z0-9]{7}\.\.(?<commit_hash>[a-z0-9]{7})/)
