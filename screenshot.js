@@ -98,7 +98,7 @@ if (system.args.length < 3 || system.args.length > 4) {
                 };
 
 				// clip selector element
-				var result = page.evaluate(getElementInfo , targetSelector);
+                var result = page.evaluate(getElementInfo , targetSelector);
 				if (result.rect !== null) {
 					page.clipRect=result.rect;
 				}

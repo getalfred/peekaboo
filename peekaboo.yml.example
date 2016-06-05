@@ -1,3 +1,4 @@
+slimerjs_cmd: "/opt/slimerjs-0.10.0/slimerjs"
 git_repo_path: "/home/peekaboo/data"
 pages:
   - title: "google"
