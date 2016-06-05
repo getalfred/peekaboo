@@ -80,13 +80,13 @@ if (system.args.length < 3 || system.args.length > 4) {
                 }
             }
 
-        			var hitBottom = false;
+   			var hitBottom = false;
             var scrollDown = function () {
 				page.scrollPosition = { top: page.scrollPosition.top + pageHeight, left: 0 };
 
 				return hitBottom = page.evaluate(function(currentY) {
 					return document.body.scrollHeight <=  currentY
-				}, page.scrollPosition.top );
+				}, page.scrollPosition.top + pageHeight);
 			}
 
             // Set a timeout to give the page a chance to render
@@ -117,7 +117,7 @@ if (system.args.length < 3 || system.args.length > 4) {
 					scrollDown();
 				}else{
 					clearInterval(scrollDownInterval)
-					setTimeout(screenshot, 3000);
+					setTimeout(screenshot, 500);
 				}
 			}, 250);
         }
