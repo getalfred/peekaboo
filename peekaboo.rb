@@ -9,6 +9,7 @@ require 'yaml'
 require 'open-uri'
 require 'csv'
 require 'json'
+require "addressable/uri"
 
 CONFIG = YAML.load_file('peekaboo.yml')
 
@@ -17,7 +18,7 @@ GIT_REPO_PATH     = Pathname.new( CONFIG['git_repo_path'])
 
 # use phantomjs get screen & push to github
 def screenshot(url, selector)
-  host  = URI.parse(url).host
+  host  =  Addressable::URI.parse(url).host
   foldr = GIT_REPO_PATH + host
 
   foldr.mkpath if !File.exists?( foldr )
