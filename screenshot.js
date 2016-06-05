@@ -78,20 +78,46 @@ if (system.args.length < 3 || system.args.length > 4) {
                 }
             }
 
-            var result = page.evaluate(getElementInfo , targetSelector);
-            if (result.rect !== null) {
-                page.clipRect=result.rect;
-            }
+        			var hitBottom = false;
+            var scrollDown = function () {
+				page.scrollPosition = { top: page.scrollPosition.top + pageHeight, left: 0 };
 
-                // Set a timeout to give the page a chance to render
-            setTimeout(function () {
+				return hitBottom = page.evaluate(function(currentY) {
+					return document.body.scrollHeight <=  currentY
+				}, page.scrollPosition.top );
+			}
+
+            // Set a timeout to give the page a chance to render
+            var screenshot = function () {
+				// reset scroll
+                page.scrollPosition = {
+                    top: 0,
+                    left: 0
+                };
+
+				// clip selector element
+				var result = page.evaluate(getElementInfo , targetSelector);
+				if (result.rect !== null) {
+					page.clipRect=result.rect;
+				}
+
+
                 console.log("write: "+imagePath)
                 page.render(imagePath);
 
                 var outputBase = imagePath.match(/(.*)\..*/)[1]
                 fs.write(outputBase+".txt",  result.text, 'w');
                 phantom.exit(1);
-            }, 500);
+            }
+
+           var scrollDownInterval = setInterval(function () {
+				if(!hitBottom){
+					scrollDown();
+				}else{
+					clearInterval(scrollDownInterval)
+					setTimeout(screenshot, 3000);
+				}
+			}, 250);
         }
     });
 }
