@@ -58,10 +58,12 @@ if (system.args.length < 3 || system.args.length > 4) {
             var getElementInfo = function (selector) {
                 document.body.bgColor = "white";
                 var elem
-                if(selector.indexOf("xpath:") == 0){
-                    elem = document.evaluate(selector.substr(6), document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                } else if( selector !== undefined && selector !== '' ) {
-                    elem = document.querySelector(selector);
+                if( selector !== undefined) {
+                    if(selector.indexOf("xpath:") == 0){
+                        elem = document.evaluate(selector.substr(6), document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                    } else if( selector !== '' ) {
+                        elem = document.querySelector(selector);
+                    }
                 }
 
                 if(elem != null){
