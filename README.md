@@ -20,7 +20,7 @@ another web page capture tool
 
 * https://github.com/getalfred/peekaboo-demo/commits/master
 * https://github.com/getalfred/peekaboo-demo/commit/03aa4131ccecc8fa06a2ed1085a622d75d86a84b
-* 
+
 ## FAQ
 
 #### why not use PhantomJS
