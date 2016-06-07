@@ -1,5 +1,6 @@
 # peekaboo
-汎用網頁差異監控系統
+
+another web page capture tool
 
 ## Requirement
 
@@ -15,6 +16,11 @@
 * run `bundle install`
 * run `bundle exec ./peekaboo.rb`
 
+## Demo
+
+* https://github.com/getalfred/peekaboo-demo/commits/master
+* https://github.com/getalfred/peekaboo-demo/commit/03aa4131ccecc8fa06a2ed1085a622d75d86a84b
+* 
 ## FAQ
 
 #### why not use PhantomJS
