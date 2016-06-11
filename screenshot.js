@@ -23,7 +23,7 @@ if (system.args.length < 3 || system.args.length > 4) {
     console.log('open: ' + address);
     console.log('selector: ' + targetSelector);
 
-    page.settings.resourceTimeout = 10000; // 10 seconds
+    page.settings.resourceTimeout = 5000;
     page.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'
 
     page.onResourceTimeout = function(e) {
@@ -117,9 +117,9 @@ if (system.args.length < 3 || system.args.length > 4) {
 					scrollDown();
 				}else{
 					clearInterval(scrollDownInterval)
-					setTimeout(screenshot, 500);
+					setTimeout(screenshot, 250);
 				}
-			}, 250);
+			}, 100);
         }
     });
 }
