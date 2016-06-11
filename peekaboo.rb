@@ -25,7 +25,7 @@ def screenshot(page)
   image_filename = Digest::MD5.hexdigest( page["url"] + page["selector"] )+".png"
   image_path     = (foldr + image_filename).expand_path
 
-  cmd = Shellwords.join(['xvfb-run', CONFIG["slimerjs_cmd"],
+  cmd = Shellwords.join(['xvfb-run', '-a', CONFIG["slimerjs_cmd"],
                          '--ssl-protocol=any',
                          SCREENSHOTJS_PATH, page["url"], image_path, page["selector"]])
   puts "screenshot cmd: #{cmd}"
