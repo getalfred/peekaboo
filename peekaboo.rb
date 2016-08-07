@@ -18,6 +18,8 @@ GIT_REPO_PATH     = Pathname.new( CONFIG['git_repo_path'])
 
 # use phantomjs get screen & push to github
 def screenshot(page)
+  return	if page["url"].to_s.strip.length == 0
+
   host  =  Addressable::URI.parse(page["url"]).host
   foldr = GIT_REPO_PATH + host
 
@@ -70,9 +72,12 @@ def send_slack_message(message)
 end
 
 pages.each do |page|
+  next if page["url"].to_s.strip.length == 0
+
   puts "\n===== #{page["title"]} #{page["url"]} ===== "
   result = screenshot(page)
   puts result
+
   matches = result.match(/[a-z0-9]{7}\.\.(?<commit_hash>[a-z0-9]{7})/)
 
   if matches
